@@ -1,2 +1,20 @@
 install gradle
 execute "./gradlew test" from challenge folder
+
+ * DESIGN choice I'm targeting allocate and free method. read and write are not in the discussion.
+     * Why use the Pointer class but only a few methods in Pointer?
+     * If it’s a pure java solution, methods like write and read should be in Pointer, but I’m mimicking a memory manager API. ame Pointer a fat implement(OOP) is not something good at low-level (memory manage) operations in my taste.
+     * Two options in my mind do allocate.
+     *  1 looking for the first slot, which is bigger than the size.
+     *  2. allocate from the last allocated slot of memory.
+     * * I choose 2nd option because
+     *  1. it's simple, and I'm confident I will finish it in a short period
+     *  2. I don’t know an algorithm/data structure that quickly locates a memory slot bigger than
+     *  size in 0(1) time complexity. The refresh method is o(n) operation.
+     *  free is o(1) always and allocate is o(1) most of time and only o(n) at the time
+     * *
+     *  improvement?
+     *  in production env, I'll monitor the access log to check the number of refresh() is called and the memory snapshot at the time
+     *  refresh is called. If the refresh() O(n) operation triggered a lot and there are enough free slots to avoid that; I’ll google
+     *  see what algorithm/data structure could allow me quickly locate the first available free slot to allocate.
+     *  and threadsafe?

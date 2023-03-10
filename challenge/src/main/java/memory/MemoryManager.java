@@ -37,7 +37,7 @@ public class MemoryManager {
      *
      * @param the size to reserve.
      * @return handler of reserved memory.
-     * @throws NoEnoughSpaceException if no enough space to allocate.
+     * @throws NoEnoughSpaceException if no enough space to allocate
      */
     public Pointer allocate(int size){
         if(size > capacity){
