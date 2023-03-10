@@ -128,7 +128,7 @@ public class MemoryManager {
             throw new RuntimeException("Invalid point used.");
         }
         int readSize = Math.min(size, range.size());
-        char[] ret = new char[size];
+        char[] ret = new char[readSize];
         for(int begin = range.begin, i = 0; i < readSize; i++, begin++){
             ret[i] = memory[begin];
         }

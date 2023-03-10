@@ -84,4 +84,33 @@ public class MemoryManagerTest {
         assertEquals('e', read[1]);
     }
 
+    @Test
+    public void writeOverSizeNotAllowed(){
+        MemoryManager manager = new MemoryManager(20);
+        Pointer p = manager.allocate(5);
+        assertThrows(RuntimeException.class, () -> manager.write(p, "hello world".toCharArray())
+        );
+    }
+
+    @Test
+    public void readBeforeWriteAllowed(){
+        MemoryManager manager = new MemoryManager(20);
+        Pointer p = manager.allocate(5);
+        char[] read = manager.read(p, 3);
+        for(int i = 0; i < 3; i++){
+            assertEquals('\u0000', read[i]);
+        }
+    }
+
+    @Test
+    public void overReadWillReturnSizeOfReservedSize(){
+        MemoryManager manager = new MemoryManager(20);
+        Pointer p = manager.allocate(2);
+        manager.write(p, "he".toCharArray());
+        char[] read = manager.read(p, 3);
+        assertEquals(2, read.length);
+        assertEquals('h', read[0]);
+        assertEquals('e', read[1]);
+    }
+
 }
